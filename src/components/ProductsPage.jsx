@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
+const productsAPI = 'https://fakestoreapi.com/products';
 
 export function ProductsPage() {
     const [productData, setProductData] = useState([])
-
-    const productsAPI = 'https://fakestoreapi.com/products';
-
     useEffect(() => {
         axios.get(productsAPI)
             .then((res) => {
@@ -18,8 +16,6 @@ export function ProductsPage() {
                 console.log(err.message)
             })
     }, [])
-
-
 
     return (
         <>
