@@ -1,8 +1,27 @@
 import { NavLink } from 'react-router-dom';
+import { useBudget } from './BudgetProvider';
+import { useEffect, useState } from 'react';
+import './HeaderMain.css'
 
 export function HeaderMain() {
-    return (
 
+    const { budget, setBudget, setBudgetMode, budgetMode } = useBudget();
+
+    const handleBudget = () => {
+        setBudgetMode(prev => !prev)
+    }
+
+    const handleBudgetChange = (e) => {
+        setBudget(e.target.value);
+    }
+
+    useEffect(() => {
+        console.log("budgetMode: ", budgetMode);
+        console.log("budget: ", budget);
+
+    }, [budgetMode, budget])
+
+    return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
             <div className="container-fluid">
                 <NavLink to="/" className="navbar-brand" >Logo@</NavLink>
@@ -23,9 +42,18 @@ export function HeaderMain() {
 
 
                     </ul>
-                    <form className="d-flex" role="search">
-                        <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                        <button className="btn btn-outline-success" type="submit">Search</button>
+                    <form className="d-flex" >
+                        <input
+                            value={budget}
+                            onChange={handleBudgetChange}
+                            className="form-control me-2"
+                            type="search"
+                            placeholder="Inserisci il tuo budget"
+                            aria-label="Search" />
+                        <button
+                            onClick={handleBudget}
+                            className={budgetMode ? "btn btn-outline-success budget-active" : "btn btn-outline-success"}
+                            type="button">Modalita' budget</button>
                     </form>
                 </div>
             </div>
